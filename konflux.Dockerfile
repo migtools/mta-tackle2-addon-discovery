@@ -3,6 +3,7 @@ COPY --chown=1001:0 . /workspace
 
 WORKDIR /workspace
 ENV GOEXPERIMENT strictfipsruntime
+ENV GOFLAGS=-buildvcs=false
 RUN go fmt ./... && go vet ./cmd/... && CGO_ENABLED=1 go build -ldflags="-w -s" -tags strictfipsruntime -o bin/addon github.com/konveyor/tackle2-addon-discovery/cmd
 
 FROM registry.redhat.io/ubi9:latest
