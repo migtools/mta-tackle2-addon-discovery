@@ -45,21 +45,7 @@ func Tag(application *api.Application, source string) (err error) {
 			}
 		}
 	}
-	components, err := recognizer.DetectComponents(appDir)
-	for _, c := range components {
-		for _, l := range c.Languages {
-			for _, t := range tags(l, cats) {
-				if !seen[t.Category.ID][t.Name] {
-					seen[t.Category.ID][t.Name] = true
-					err = addon.Tag.Ensure(&t)
-					if err != nil {
-						return
-					}
-					ids = append(ids, t.ID)
-				}
-			}
-		}
-	}
+
 	appTags := addon.Application.Tags(application.ID)
 	appTags.Source(source)
 	err = appTags.Replace(ids)
