@@ -7,7 +7,7 @@ ENV GOFLAGS=-buildvcs=false
 RUN go fmt ./... && go vet ./cmd/... && CGO_ENABLED=1 go build -ldflags="-w -s" -tags strictfipsruntime -o bin/addon github.com/konveyor/tackle2-addon-discovery/cmd
 
 FROM registry.redhat.io/ubi9:latest
-RUN dnf -y install glibc-langpack-en openssh-clients openssl subversion git tar && dnf -y clean all
+RUN dnf -y install glibc-langpack-en openssh-clients subversion git tar && dnf -y clean all
 RUN sed -i 's/^LANG=.*/LANG="en_US.utf8"/' /etc/locale.conf
 ENV LANG=en_US.utf8
 RUN echo "addon:x:1001:1001:addon user:/addon:/sbin/nologin" >> /etc/passwd
